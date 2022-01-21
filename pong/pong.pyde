@@ -59,6 +59,8 @@ def keyPressed():
 
 
 def draw():
+    left_sync = left_y
+    right_sync = right_y
     global ball_x 
     global left_y
     global right_y
@@ -73,9 +75,9 @@ def draw():
         ball_x += ball_speed
     else: 
         ball_x -= ball_speed
-    if ball_x +ball_size >= width - paddle_width and ball_y <= right_y + paddle_height and ball_y >= right_y:
+    if ball_x +ball_size >= width - paddle_width and ball_y <= right_sync + paddle_height and ball_y >= right_sync:
         ball_x_dir = False
-    if ball_x < paddle_width and ball_y >= left_y and ball_y <= left_y + paddle_height: 
+    if ball_x < paddle_width and ball_y >= left_sync and ball_y <= left_sync + paddle_height: 
         ball_x_dir = True
     
     if ball_y_dir == True: 
@@ -88,8 +90,8 @@ def draw():
         ball_y_dir = True
         
     draw_ball(ball_x, ball_y)
-    draw_left_paddle(left_y)
-    draw_right_paddle(right_y)
+    draw_left_paddle(left_sync)
+    draw_right_paddle(right_sync)
 
 
     
