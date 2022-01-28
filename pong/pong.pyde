@@ -57,9 +57,10 @@ def repose():
     global ball_y_dir
     
     ball_x = width/2
-    ball_y = height/2
-    ball_x_dir = True
-    ball_y_dir = True
+    ball_y = int(random(50, height-50))
+    outcomes = [True, False]
+    ball_x_dir = outcomes[int(random(0, 2))]
+    ball_y_dir = outcomes[int(random(0, 2))]
 
 
 def draw():
