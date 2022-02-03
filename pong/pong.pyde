@@ -10,6 +10,8 @@ ball_speed = 2
 ball_size = 8
 scoreleft = 0
 scoreright = 0
+paddle_speed = 2
+base_speed = 2
 #True: Increasing False: Decreasing
 ball_x_dir = True
 ball_y_dir = True
@@ -19,6 +21,7 @@ def setup():
     background(0)
     print("greetings")
     draw_ball(width/2, 20)
+    repose()
 
 
 def draw_ball(X_pos, Y_pos):
@@ -40,14 +43,15 @@ def draw_right_paddle(Y_pos):
 def keyPressed():
     global step_size_left
     global step_size_right
+    global paddle_speed
     if key =='w':
-        step_size_left = -2
+        step_size_left = -paddle_speed
     if key =='s':
-        step_size_left = 2
+        step_size_left = paddle_speed
     if key == 'i':
-        step_size_right = -2
+        step_size_right = -paddle_speed
     if key == 'k': 
-        step_size_right = 2
+        step_size_right = paddle_speed
 
     
 def repose():
@@ -78,7 +82,9 @@ def draw():
     global paddle_height
     global scoreleft
     global scoreright
-    
+    global ball_speed
+    global paddle_speed
+    global base_speed
     background(0)
     if ball_x_dir == True: 
         ball_x += ball_speed
@@ -86,8 +92,13 @@ def draw():
         ball_x -= ball_speed
     if ball_x +ball_size >= width - paddle_width and ball_y <= right_y + paddle_height and ball_y >= right_y:
         ball_x_dir = False
+        ball_speed += 1
+        paddle_speed += 1
+        
     if ball_x < paddle_width and ball_y >= left_y and ball_y <= left_y + paddle_height: 
         ball_x_dir = True
+        ball_speed += 1
+        paddle_speed += 1
     
     if ball_y_dir == True: 
         ball_y += ball_speed
@@ -100,17 +111,28 @@ def draw():
         
     if ball_x > width:
         scoreleft += 1
+        paddle_speed = base_speed+1
+        ball_speed = base_speed
         print ("left score is equal to " + str(scoreleft), "right score is equal to " + str(scoreright))
         repose()
            
     if ball_x < 0 : 
         scoreright += 1
+        paddle_speed = base_speed+1
+        ball_speed = base_speed
         print ("left score is equal to " + str(scoreleft), "right score is equal to " + str(scoreright))
         repose()
         
-
-        
-        
+   
+    f = createFont("Arial", 16, True)
+    textFont(f, 16) 
+    text(scoreleft,height/2, 40)
+    
+    text(scoreright, width-height/2, 40)
+    
+    line(width/2, 0, width/2, height)
+    
+    
     draw_ball(ball_x, ball_y)
     left_y += step_size_left
     right_y += step_size_right
